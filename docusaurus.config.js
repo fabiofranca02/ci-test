@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/nightOwl')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: `My Site ${process.env.ID_NUMBER}`,
+  title: `My Site #${process.env.ID_NUMBER}`,
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
