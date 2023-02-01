@@ -34,10 +34,10 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
 
-      - name: Install surge
-        run: npm install -g surge
-      - name: Deploy surge
-        env:
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-          SURGE_DOMAIN: ${{ vars.SURGE_TOKEN }}
-        run: surge --project ./build --token $SURGE_TOKEN --domain $SURGE_DOMAIN
+      - name: Deploy to ${{ vars.SURGE_DOMAIN }}
+        uses: dswistowski/surge-sh-action@v1
+        with:
+          domain: ${{ vars.SURGE_DOMAIN }}
+          project: './build'
+          login: ${{ secrets.SURGE_LOGIN }}
+          token: ${{ secrets.SURGE_TOKEN }}
