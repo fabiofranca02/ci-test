@@ -6,12 +6,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/nightOwl')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
+  title: `My Site ${process.env.ID_NUMBER}`,
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://fabiofranca02.github.io',
+  url: process.env.URL_PRODUCTION,
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: process.env.BASE_URL || '/',

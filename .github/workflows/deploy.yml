@@ -7,6 +7,9 @@ on:
 permissions:
   contents: write
 
+env:
+  ID_NUMBER: ${{ vars.GITHUB_RUN_NUMBER }}
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -25,6 +28,7 @@ jobs:
         run: npm ci --silent
       - name: Build website
         env:
+          URL_PRODUCTION: fabiofranca02.github.io
           BASE_URL: /ci-test/
         run: npm run build --if-present
       - name: deploy to gh-pages
@@ -33,12 +37,13 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
 
-      - name: Deploy to ${{ vars.SURGE_DOMAIN }}
+      - name: Deploy to '${{ vars.SURGE_DOMAIN }}'
         env:
           BASE_URL: /
+          URL_PRODUCTION: ${{ vars.SURGE_DOMAIN }}
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: ${{ vars.SURGE_DOMAIN }}
+          domain: '${{ vars.SURGE_DOMAIN }}'
           project: './build'
           login: ${{ secrets.SURGE_LOGIN }}
           token: ${{ secrets.SURGE_TOKEN }}
