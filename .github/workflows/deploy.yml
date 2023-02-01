@@ -8,7 +8,8 @@ permissions:
   contents: write
 
 env:
-  ID_NUMBER: '${{ vars.GITHUB_RUN_NUMBER }}'
+  ID_NUMBER: ${{ github.run_number }}
+  SURGE_DOMAIN: my-website.surge.sh
 
 jobs:
   build-and-deploy-gh-pages:
@@ -54,14 +55,14 @@ jobs:
         run: npm ci --silent
       - name: Build website
         env:
-          URL_PRODUCTION: 'https://${{ vars.SURGE_DOMAIN }}'
+          URL_PRODUCTION: https://${{ env.SURGE_DOMAIN }}
           BASE_URL: /
         run: npm run build --if-present
 
-      - name: Deploy to surge -> '${{ vars.SURGE_DOMAIN }}'
+      - name: Deploy to surge -> ${{ env.SURGE_DOMAIN }}
         uses: dswistowski/surge-sh-action@v1
         with:
-          domain: '${{ vars.SURGE_DOMAIN }}'
+          domain: '${{ env.SURGE_DOMAIN }}'
           project: './build'
           login: ${{ secrets.SURGE_LOGIN }}
           token: ${{ secrets.SURGE_TOKEN }}
