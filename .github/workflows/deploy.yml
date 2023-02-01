@@ -11,7 +11,7 @@ env:
   ID_NUMBER: ${{ vars.GITHUB_RUN_NUMBER }}
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-gh-pages:
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,7 +28,7 @@ jobs:
         run: npm ci --silent
       - name: Build website
         env:
-          URL_PRODUCTION: fabiofranca02.github.io
+          URL_PRODUCTION: https://fabiofranca02.github.io
           BASE_URL: /ci-test/
         run: npm run build --if-present
       - name: deploy to gh-pages
@@ -37,7 +37,28 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
 
-      - name: Deploy to '${{ vars.SURGE_DOMAIN }}'
+  build-and-deploy-surge:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci --silent
+      - name: Build website
+        env:
+          URL_PRODUCTION: https://${{ vars.SURGE_DOMAIN }}
+          BASE_URL: /
+        run: npm run build --if-present
+
+      - name: Deploy to surge -> '${{ vars.SURGE_DOMAIN }}'
         env:
           BASE_URL: /
           URL_PRODUCTION: ${{ vars.SURGE_DOMAIN }}
