@@ -9,7 +9,7 @@ permissions:
 
 env:
   ID_NUMBER: ${{ github.run_number }}
-  SURGE_DOMAIN: my-website.surge.sh
+  SURGE_DOMAIN: ci-test-website.surge.sh
 
 jobs:
   build-and-deploy-gh-pages:
