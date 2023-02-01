@@ -9,7 +9,7 @@ permissions:
   contents: write
 
 env:
-  BASE_URL: /ci/
+  BASE_URL: /ci-test/
 
 jobs:
   build:
