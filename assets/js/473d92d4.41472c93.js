@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[5033],{5960:e=>{e.exports=JSON.parse('{"label":"hola","permalink":"/site-legendario/blog/tags/hola","allTagsPath":"/site-legendario/blog/tags","count":1}')}}]);
