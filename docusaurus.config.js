@@ -3,7 +3,6 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github')
 const darkCodeTheme = require('prism-react-renderer/themes/nightOwl')
-// require('dotenv').config()
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
