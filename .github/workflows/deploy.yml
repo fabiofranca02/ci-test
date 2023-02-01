@@ -9,8 +9,6 @@ permissions:
 
 env:
   BASE_URL: /ci-test/
-  SURGE_DOMAIN: ${{ vars.SURGE_DOMAIN }}
-  SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
 jobs:
   build-and-deploy:
@@ -39,4 +37,4 @@ jobs:
       - name: Install surge
         run: npm install -g surge
       - name: Deploy surge
-        run: surge --project ./build --token $SURGE_TOKEN --domain $SURGE_DOMAIN
+        run: surge --project ./build --token ${{ secrets.SURGE_TOKEN }} --domain ${{ vars.SURGE_DOMAIN }}
