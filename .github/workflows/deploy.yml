@@ -7,9 +7,6 @@ on:
 permissions:
   contents: write
 
-env:
-  BASE_URL: /ci-test/
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -27,6 +24,8 @@ jobs:
       - name: Install dependencies
         run: npm ci --silent
       - name: Build website
+        env:
+          BASE_URL: /ci-test/
         run: npm run build --if-present
       - name: deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
@@ -35,6 +34,8 @@ jobs:
           publish_dir: ./build
 
       - name: Deploy to ${{ vars.SURGE_DOMAIN }}
+        env:
+          BASE_URL: /
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: ${{ vars.SURGE_DOMAIN }}
