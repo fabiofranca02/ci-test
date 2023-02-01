@@ -31,8 +31,7 @@ jobs:
         env:
           URL_PRODUCTION: https://fabiofranca02.github.io
           BASE_URL: /ci-test/
-        run: |
-          echo 'gn-${{ github }}'
+        run:
           npm run build --if-present
       - name: deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
@@ -59,12 +58,9 @@ jobs:
         env:
           URL_PRODUCTION: https://${{ env.SURGE_DOMAIN }}
           BASE_URL: /
-        run: npm run build --if-present
+        run: |
+          npm run build --if-present
+          npm install -g surge
 
       - name: Deploy to surge -> ${{ env.SURGE_DOMAIN }}
-        uses: dswistowski/surge-sh-action@v1
-        with:
-          domain: '${{ env.SURGE_DOMAIN }}'
-          project: './build'
-          login: ${{ secrets.SURGE_LOGIN }}
-          token: ${{ secrets.SURGE_TOKEN }}
+        run: surge ./build ${{ env.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
