@@ -31,8 +31,9 @@ jobs:
         env:
           URL_PRODUCTION: https://fabiofranca02.github.io
           BASE_URL: /ci-test/
-        run: npm run build --if-present
-        run: echo 'gn-${{ github }}'
+        run: |
+          echo 'gn-${{ github }}'
+          npm run build --if-present
       - name: deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
