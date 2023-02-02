@@ -47,5 +47,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           source_branch: develop
           target_branch: main
-          title: My pull request test
-          body: "**Automated pull request**"
+          title: Pull request test
+          body: "** Automated pull request **"
