@@ -1,0 +1,51 @@
+name: Deploy Staging - Github Pages
+
+on:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: write
+
+env:
+  ID_NUMBER: ${{ github.run_number }}
+
+jobs:
+  build-and-deploy-gh-pages:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: npm ci --silent
+      - name: Build website
+        env:
+          URL_PRODUCTION: https://fabiofranca02.github.io
+          BASE_URL: /ci-test/
+        run:
+          npm run build --if-present
+      - name: deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+
+  pull_request:
+    runs-on: ubuntu-latest
+    needs: [build-and-deploy-gh-pages]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: devops-infra/action-pull-request@v0.5.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_branch: develop
+          target_branch: main
+          title: My pull request test
+          body: "**Automated pull request**"
