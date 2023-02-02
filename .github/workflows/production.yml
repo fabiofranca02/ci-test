@@ -62,7 +62,6 @@ jobs:
                 repo: context.repo.repo,
                 tag_name: 'deploy',
               });
-
               core.exportVariable('RELEASE_ID', response.data.id);
               core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
             } catch (error) {
