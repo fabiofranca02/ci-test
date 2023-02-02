@@ -42,12 +42,16 @@ jobs:
     needs: [build-and-deploy-gh-pages]
     steps:
       - uses: actions/checkout@v2
-      - uses: devops-infra/action-pull-request@v0.5.3
+      - name: Create pull request
+        uses: repo-sync/pull-request@v2
         with:
+          source_branch: "develop"
+          destination_branch: "main"
+          pr_title: "Pulling ${{ github.ref }} into main"
+          pr_body: |
+            :crown: *An automated PR*
+          pr_assignee: "${{ github.actor }}"
+          pr_label: "automatic"
+          pr_draft: true
+          pr_allow_empty: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          title: ${{ github.event.commits[0].message }}
-          assignee: ${{ github.actor }}
-          label: automatic
-          old_string: "** Description here **"
-          new_string: ${{ github.event.commits[0].message }}
-          get_diff: true
